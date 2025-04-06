@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
             title: "Password Strength Indicator",
             description: "A tool to check the strength of your passwords.",
             image: "password.jpg",
-            githubUrl: "https://github.com/yourusername/portfolio-template",
+            githubUrl: "https://github.com/AadityaSaxena20/Password-Strength-Indicator",
             liveDemo: "https://aadityasaxena20.github.io/Password-Strength-Indicator/"
         }
     ];
