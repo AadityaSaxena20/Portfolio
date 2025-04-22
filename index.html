@@ -3,117 +3,312 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio | Web Developer</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>AI Chatbot</title>
+    <style>
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.chat-container {
+    width: 100%;
+    max-width: 800px;
+    height: 80vh;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Chatbox Styles */
+#chatbox {
+    flex: 1;
+    padding: 24px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background-color: #fafafa;
+}
+
+.user, .bot {
+    max-width: 75%;
+    padding: 12px 18px;
+    border-radius: 18px;
+    line-height: 1.5;
+    position: relative;
+    word-wrap: break-word;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.user {
+    align-self: flex-end;
+    background-color: #4f46e5;
+    color: white;
+    border-bottom-right-radius: 4px;
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.2);
+}
+
+.bot {
+    align-self: flex-start;
+    background-color: white;
+    color: #333;
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+}
+
+/* Input Container Styles */
+.input-container {
+    display: flex;
+    padding: 16px;
+    background-color: white;
+    border-top: 1px solid #e5e7eb;
+}
+
+#userInput {
+    flex: 1;
+    padding: 14px 20px;
+    border: 1px solid #e5e7eb;
+    border-radius: 24px;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+    background-color: #f9fafb;
+}
+
+#userInput:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+button {
+    margin-left: 12px;
+    padding: 0 24px;
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 24px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #4338ca;
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Typing Indicator */
+.typing-indicator {
+    display: flex;
+    padding: 12px 18px;
+    background-color: white;
+    border-radius: 18px;
+    border-bottom-left-radius: 4px;
+    align-self: flex-start;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+}
+
+.typing-dot {
+    width: 8px;
+    height: 8px;
+    margin: 0 2px;
+    background-color: #9ca3af;
+    border-radius: 50%;
+    animation: typingAnimation 1.4s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes typingAnimation {
+    0%, 60%, 100% {
+        transform: translateY(0);
+    }
+    30% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Scrollbar Styling */
+#chatbox::-webkit-scrollbar {
+    width: 8px;
+}
+
+#chatbox::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+#chatbox::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 10px;
+}
+
+#chatbox::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .chat-container {
+        height: 90vh;
+        border-radius: 12px;
+    }
+    
+    .user, .bot {
+        max-width: 85%;
+    }
+    
+    .input-container {
+        padding: 12px;
+    }
+    
+    #userInput {
+        padding: 12px 16px;
+    }
+    
+    button {
+        padding: 0 20px;
+    }
+
+}</style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">
-                    <img src="myimage.jpg" alt="Aaditya Saxena">
-                    <span>Aaditya Saxena</span>
-                </div>
-                <ul class="nav-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <div class="chat-container">
+        <div id="chatbox" class="chatbox"></div>
+        <div class="input-container">
+            <input type="text" id="userInput" placeholder="Ask something...">
+            <button onclick="sendMessage()">Send</button>
 
-    <section id="home" class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Hi, I'm <span>Aaditya Saxena</span></h1>
-                <p>A passionate web developer creating modern and responsive websites</p>
-                <div class="cta-buttons">
-                    <a href="#projects" class="btn btn-primary">View My Work</a>
-                    <a href="#contact" class="btn btn-secondary">Contact Me</a>
-                </div>
-                <div class="social-links">
-                    <a href="https://github.com/AadityaSaxena20" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                        <i class="fab fa-github" aria-hidden="true"></i>
-                    </a>
-                    <a href="mailto:aaditya.saxena2023@vitstudent.ac.in" aria-label="Email">
-                        <i class="fas fa-envelope" aria-hidden="true"></i>
-                    </a>
-                </div>
-            </div>
         </div>
-    </section>
+    </div>
 
-    <section id="projects" class="projects">
-        <div class="container">
-            <div class="section-title">
-                <h2>My Projects</h2>
-            </div>
-            <div class="projects-grid" id="projects-container">
-            </div>
-        </div>
-    </section>
+    <!-- ...same CSS and body above -->
 
-    <section id="about" class="about">
-        <div class="container">
-            <div class="section-title">
-                <h2>About Me</h2>
-            </div>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>I’m a passionate Web Developer and a dedicated Computer Science Engineering student at VIT Chennai, specializing in Artificial Intelligence and Machine Learning. I have strong expertise in HTML, CSS, JavaScript, and modern front-end frameworks.
-                        I love building interactive, user-friendly, and aesthetically pleasing websites that not only look great but also solve real-world problems. Whether it’s a portfolio, a game, or a full-stack app, I enjoy turning ideas into functional digital experiences.
-                        I’m constantly learning and exploring new technologies to enhance my skillset and stay up to date in the world of tech..</p>
-                    <p>When I'm not coding, you can find me exploring new technologies, contributing to open source, or enjoying outdoor activities.</p>
-                    <div class="skills">
-                        <h3>My Skills</h3>
-                        <div class="skills-container">
-                            <div class="skill-item">HTML</div>
-                            <div class="skill-item">CSS</div>
-                            <div class="skill-item">JavaScript</div>
-                            <div class="skill-item">React</div>
-                            <div class="skill-item">Node.js</div>
-                            <div class="skill-item">Git</div>
-                            <div class="skill-item">Responsive Design</div>
-                            <div class="skill-item">UI/UX</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-image">
-                    <img src="myimage.jpg" alt="Aaditya Saxena">
-                </div>
-            </div>
-        </div>
-    </section>
+<script>
+    const inputField = document.getElementById('userInput');
+    const chatbox = document.getElementById('chatbox');
 
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="section-title">
-                <h2>Get In Touch</h2>
-            </div>
-            <form id="contact-form">
-                <div class="form-group">
-                    <input type="text" id="name" name="name" placeholder="Your Name" required>
-                </div>
-                <div class="form-group">
-                    <input type="email" id="email" name="email" placeholder="Your Email" required>
-                </div>
-                <div class="form-group">
-                    <textarea id="message" name="message" placeholder="Your Message" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Send Message</button>
-            </form>
-        </div>
-    </section>
+    // Function to add messages to the chatbox
+    function addMessage(content, sender = 'bot') {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = sender;
 
-    <footer>
-        <div class="container">
-            <p>&copy; <span id="year"></span> Aaditya Saxena. All rights reserved.</p>
-        </div>
-    </footer>
+    // Safely handle HTML links
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = content;
 
-    <script src="script.js"></script>
+    // Make all links open in a new tab
+    tempDiv.querySelectorAll('a').forEach(link => {
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+    });
+
+    messageDiv.innerHTML = tempDiv.innerHTML;
+    messageDiv.style.whiteSpace = 'pre-line';
+    chatbox.appendChild(messageDiv);
+    chatbox.scrollTop = chatbox.scrollHeight;
+}
+
+    // Typing indicator (optional)
+    function showTyping() {
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'typing-indicator';
+        typingDiv.id = 'typing';
+        typingDiv.innerHTML = `
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>`;
+        chatbox.appendChild(typingDiv);
+        chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    function removeTyping() {
+        const typingDiv = document.getElementById('typing');
+        if (typingDiv) typingDiv.remove();
+    }
+
+    // Main function to send message
+    async function sendMessage() {
+        const userText = inputField.value.trim();
+        if (!userText) return;
+
+        addMessage(userText, 'user');
+        inputField.value = '';
+
+        showTyping();
+
+        try {
+            const response = await fetch("/get", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: userText })
+            });
+
+            const data = await response.json();
+            removeTyping();
+
+            addMessage(data.response, 'bot');
+        } catch (error) {
+            removeTyping();
+            addMessage("❌ Error connecting to chatbot.", 'bot');
+            console.error(error);
+        }
+    }
+
+    // Allow pressing Enter to send message
+    inputField.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            sendMessage();
+        }
+    });
+</script>
+
+
 </body>
 </html>
